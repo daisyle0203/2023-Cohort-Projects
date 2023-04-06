@@ -28,7 +28,7 @@ PillPal is an app that helps you manage your medication schedule with ease, so y
 
 ---
 
-![Screenshot](../2023-Cohort-Projects/Cohort1/team-d/pill_pal/assets/images/pillpal_screenshot.jpg)
+![Screenshot](./Cohort1/team-d/pill_pal/assets/images/pillpal_screenshot.jpg)
 
 
 ## Features
