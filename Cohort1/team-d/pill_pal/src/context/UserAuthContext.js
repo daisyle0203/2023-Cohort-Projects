@@ -65,7 +65,7 @@ function UserAuth({ children }) {
         email,
         password,
       });
-      Alert.alert('Check your email for the login link!');
+      Alert.alert('Check your email to confirm your email!');
     } catch (error) {
       Alert.alert(error.error_description || error.message);
     } finally {
