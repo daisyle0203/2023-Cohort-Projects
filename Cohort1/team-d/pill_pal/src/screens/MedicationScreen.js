@@ -6,12 +6,12 @@ import { useUserAuth } from '../../src/hooks/useUserAuth';
 import { useUserMedication } from '../../src/hooks/useUserMedication';
 import { takeWithMealEnum } from '../enums/TakeWithMealEnum';
 
-const Item = ({ title, status, duration, frequency, amount, icon }) => (
+const Item = ({ name, status, duration, frequency, amount, icon }) => (
   <View style={styles.item}>
     <Card style={styles.card}>
       <Card.Content>
         <Card.Title
-          title={title}
+          title={name}
           titleNumberOfLines={2}
           subtitle={`Take with meal: ${status} - Amount: ${amount} pills  - Duration: ${duration} days - Frequency: ${frequency} pill/day`}
           subtitleNumberOfLines={5}
@@ -30,7 +30,7 @@ const MedicationScreen = () => {
 
   const DATA = medicationList.map((medication, i) => ({
     id: i,
-    title: medication.name,
+    name: medication.name,
     amount: medication.amount,
     duration: medication.duration,
     frequency: medication.frequency,
@@ -77,7 +77,7 @@ const MedicationScreen = () => {
         data={searchQuery ? filteredData : DATA}
         renderItem={({ item }) => (
           <Item
-            title={item.title}
+            name={item.name}
             status={item.status}
             amount={item.amount}
             duration={item.duration}
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   searchbar: {
     margin: 30,
     borderRadius: 15,
-    backgroundColor: "#efeaef",
+    backgroundColor: '#efeaef',
   },
   titleHello: {
     fontSize: 30,

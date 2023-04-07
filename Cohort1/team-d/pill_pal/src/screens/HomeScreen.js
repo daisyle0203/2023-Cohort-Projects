@@ -12,17 +12,19 @@ import {
   Portal,
 } from 'react-native-paper';
 import WheelPicker from 'react-native-wheely';
+
 import { useUserAuth } from '../../src/hooks/useUserAuth';
 import { useUserMedication } from '../../src/hooks/useUserMedication';
 import { statusEnum } from '../enums/StatusEnum';
-const Item = ({ title, status, amount, icon, onPress, id }) => (
+
+const Item = ({ name, status, amount, icon, onPress, id }) => (
   <TouchableOpacity onPress={() => onPress(id)}>
     <View style={styles.item}>
       <Card disabled style={styles.card}>
         <Card.Content>
           <Card.Title
-            title={title}
-            titleNumberOfLines={2}
+            title={name}
+            titleNumberOfLines={4}
             subtitle={`Status: ${statusEnum[status]} - Amount: ${amount} pills`}
             subtitleNumberOfLines={6}
             left={(props) => <Avatar.Icon {...props} icon={icon} />}
@@ -32,12 +34,15 @@ const Item = ({ title, status, amount, icon, onPress, id }) => (
     </View>
   </TouchableOpacity>
 );
+
 const HomeScreen = () => {
   const [selectedReminder, setSelectedReminder] = useState(null);
   const [showConfetti, setShowConfetti] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredData, setFilteredData] = useState([]);
   const { profile } = useUserAuth();
+  // console.log(profile);
+
   const {
     medicationReminders,
     updateMedicationReminder,
@@ -45,26 +50,33 @@ const HomeScreen = () => {
     totalMedicationReminders,
     filterMedicationRemindersByDay,
   } = useUserMedication();
+
   const onChangeSearch = (query) => {
     setSearchQuery(query);
-    const filteredData = filterMedicationRemindersByDay(medicationReminders);
+    const filteredData = medicationReminders.filter((item) => {
+      return item.name.toLowerCase().includes(query.toLowerCase());
+    });
+    console.log(filteredData);
+
     setFilteredData(filteredData);
   };
-  const DATA = useMemo(() =>
-    medicationReminders.map(
-      (medication) => ({
+
+  const DATA = useMemo(
+    () =>
+      medicationReminders.map((medication) => ({
         id: medication.id,
-        title: medication.name,
+        name: medication.name,
         amount: medication.amount,
         status: medication.status,
         completedAt: medication.completedAt,
-      }),
-      [medicationReminders]
-    )
+      })),
+    [medicationReminders]
   );
+
   const handleReminderPress = (itemId) => {
     setSelectedReminder(medicationReminders.filter((item) => item.id === itemId)[0]);
   };
+
   const handleReminderStatusChange = (statusIndex) => {
     setShowConfetti(false);
     updateMedicationReminder({ ...selectedReminder, status: statusIndex });
@@ -76,6 +88,7 @@ const HomeScreen = () => {
       setShowConfetti(false);
     }, 8000);
   };
+
   if (profile) {
     return (
       <>
@@ -135,7 +148,7 @@ const HomeScreen = () => {
           renderItem={({ item }) => (
             <Item
               id={item.id}
-              title={item.title}
+              name={item.name}
               status={item.status}
               time={item.time}
               amount={item.amount}
@@ -149,13 +162,16 @@ const HomeScreen = () => {
       </>
     );
   }
+
   return (
     <View style={styles.activityIndicator}>
       <ActivityIndicator animating size="large" />
     </View>
   );
 };
+
 export default HomeScreen;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
