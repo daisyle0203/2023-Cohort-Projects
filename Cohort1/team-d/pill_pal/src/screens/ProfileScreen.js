@@ -9,19 +9,14 @@ import { useUserAuth } from '../../src/hooks/useUserAuth';
 export default function ProfileScreen() {
   const { loading, profile, logout, updateProfile, session } = useUserAuth();
   const [username, setUsername] = useState('');
-  const [website, setWebsite] = useState('');
 
   const handleSetUserName = useCallback((text) => {
     setUsername(text);
   }, []);
 
-  const handleSetWebsite = useCallback((text) => {
-    setWebsite(text);
-  }, []);
-
   const handleUpdateProfile = useCallback(() => {
-    updateProfile({ username, website });
-  }, [username, website]);
+    updateProfile({ username });
+  }, [username]);
 
   const handleLogout = useCallback(() => {
     logout();
@@ -75,11 +70,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white',
-    padding: 40,
+    backgroundColor: '#fff',
+    padding: 50,
   },
   avatarContainer: {
     marginBottom: 30,
+    backgroundColor: 'CBC3E3',
   },
   inputContainer: {
     width: '100%',

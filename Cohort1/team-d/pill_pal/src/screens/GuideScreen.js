@@ -168,6 +168,7 @@ const styles = StyleSheet.create({
   },
   messageText: {
     fontSize: 16,
+    padding: 7,
   },
   inputContainer: {
     flexDirection: 'row',

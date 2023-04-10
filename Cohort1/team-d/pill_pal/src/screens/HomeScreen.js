@@ -25,7 +25,9 @@ const Item = ({ name, status, amount, icon, onPress, id }) => (
           <Card.Title
             title={name}
             titleNumberOfLines={4}
-            subtitle={`Status: ${statusEnum[status]} - Amount: ${amount} pills`}
+            subtitle={`Status: ${statusEnum[status]} • Amount: ${amount} ${
+              amount > 1 ? 'pills' : 'pill'
+            }`}
             subtitleNumberOfLines={6}
             left={(props) => <Avatar.Icon {...props} icon={icon} />}
           />
@@ -41,14 +43,12 @@ const HomeScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredData, setFilteredData] = useState([]);
   const { profile } = useUserAuth();
-  // console.log(profile);
 
   const {
     medicationReminders,
     updateMedicationReminder,
     completedMedications,
     totalMedicationReminders,
-    filterMedicationRemindersByDay,
   } = useUserMedication();
 
   const onChangeSearch = (query) => {
@@ -86,90 +86,87 @@ const HomeScreen = () => {
     }
     setTimeout(() => {
       setShowConfetti(false);
-    }, 8000);
+    }, 7000);
   };
-
-  const confettiColors = ['#FFFFFF', '#000000'];
 
   if (profile) {
     return (
       <>
-      <View style={styles.container}>
-        {showConfetti && (
-          <ConfettiCannon
-            count={200}
-            autoStart
-            origin={{ x: -10, y: 0 }}
-            confettiColors={['#ffdd00', '#ff4d4d', '#4d4dff', '#00cc99']}
-          />
-        )}
-        <Portal>
-          <Modal
-            visible={selectedReminder !== null}
-            onDismiss={() => setSelectedReminder(null)}
-            contentContainerStyle={{
-              backgroundColor: 'white',
-              padding: 20,
-              position: 'absolute',
-              right: 0,
-              left: 0,
-              bottom: 0,
-            }}>
-            <Text>{selectedReminder?.name}</Text>
-            <WheelPicker
-              selectedIndex={0}
-              options={Object.values(statusEnum)}
-              onChange={handleReminderStatusChange}
-              selectedIndicatorStyle={{
-                backgroundColor: '#CBC3E3',
-              }}
-              itemTextStyle={{ fontSize: 25, fontWeight: 500 }}
-              itemHeight={50}
-            />
-          </Modal>
-        </Portal>
-        <FlatList
-          
-          ListHeaderComponent={
-            <>
-              <Searchbar
-                placeholder="Search"
-                onChangeText={onChangeSearch}
-                value={searchQuery}
-                style={styles.searchbar}
-              />
-              <Text style={styles.titleHello}>Hello,</Text>
-              <Text style={styles.titleName}>{capitalize(profile.username)}</Text>
-              <View style={styles.banner}>
-                <View style={styles.bannerLeft}>
-                  <Text style={styles.plan}>Your plan for today</Text>
-                  <Text style={styles.number}>
-                    {completedMedications} out of {totalMedicationReminders} completed
-                  </Text>
-                </View>
-                <View style={styles.bannerRight}>
-                  <Image source={require('../../assets/images/jah-lifter.png')} />
-                </View>
-              </View>
-              <Text style={styles.titleReview}>Daily Review</Text>
-            </>
-          }
-          data={searchQuery ? filteredData : DATA}
-          renderItem={({ item }) => (
-            <Item
-              id={item.id}
-              name={item.name}
-              status={item.status}
-              time={item.time}
-              amount={item.amount}
-              completedAt={item.completedAt}
-              icon="pill"
-              onPress={handleReminderPress}
+        <View style={styles.container}>
+          {showConfetti && (
+            <ConfettiCannon
+              count={200}
+              autoStart
+              origin={{ x: -10, y: 0 }}
+              confettiColors={['#ffdd00', '#ff4d4d', '#4d4dff', '#00cc99']}
             />
           )}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
+          <Portal>
+            <Modal
+              visible={selectedReminder !== null}
+              onDismiss={() => setSelectedReminder(null)}
+              contentContainerStyle={{
+                backgroundColor: 'white',
+                padding: 20,
+                position: 'absolute',
+                right: 0,
+                left: 0,
+                bottom: 0,
+              }}>
+              <Text>{selectedReminder?.name}</Text>
+              <WheelPicker
+                selectedIndex={0}
+                options={Object.values(statusEnum)}
+                onChange={handleReminderStatusChange}
+                selectedIndicatorStyle={{
+                  backgroundColor: '#CBC3E3',
+                }}
+                itemTextStyle={{ fontSize: 25, fontWeight: 500 }}
+                itemHeight={50}
+              />
+            </Modal>
+          </Portal>
+          <FlatList
+            ListHeaderComponent={
+              <>
+                <Searchbar
+                  placeholder="Search"
+                  onChangeText={onChangeSearch}
+                  value={searchQuery}
+                  style={styles.searchbar}
+                />
+                <Text style={styles.titleHello}>Hello,</Text>
+                <Text style={styles.titleName}>{capitalize(profile.username)}</Text>
+                <View style={styles.banner}>
+                  <View style={styles.bannerLeft}>
+                    <Text style={styles.plan}>Your plan for today</Text>
+                    <Text style={styles.number}>
+                      {completedMedications} out of {totalMedicationReminders} completed
+                    </Text>
+                  </View>
+                  <View style={styles.bannerRight}>
+                    <Image source={require('../../assets/images/jah-lifter.png')} />
+                  </View>
+                </View>
+                <Text style={styles.titleReview}>Daily Review</Text>
+              </>
+            }
+            data={searchQuery ? filteredData : DATA}
+            renderItem={({ item }) => (
+              <Item
+                id={item.id}
+                name={item.name}
+                status={item.status}
+                time={item.time}
+                amount={item.amount}
+                completedAt={item.completedAt}
+                icon="pill"
+                onPress={handleReminderPress}
+              />
+            )}
+            keyExtractor={(item) => item.id}
+          />
+        </View>
       </>
     );
   }
@@ -209,9 +206,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   number: {
-    fontSize: 12,
-    color: '#666A71',
-    marginTop: 5,
+    fontSize: 14,
+    color: '#6E7191',
+    marginTop: 25,
   },
   showMore: {
     fontSize: 15,

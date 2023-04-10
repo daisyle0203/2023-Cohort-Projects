@@ -13,7 +13,11 @@ const Item = ({ name, status, duration, frequency, amount, icon }) => (
         <Card.Title
           title={name}
           titleNumberOfLines={2}
-          subtitle={`Take with meal: ${status} - Amount: ${amount} pills  - Duration: ${duration} days - Frequency: ${frequency} pill/day`}
+          subtitle={`${status} • Amount: ${amount} ${
+            amount > 1 ? 'pills' : 'pill'
+          } • Duration: ${duration} ${
+            duration > 1 ? 'days' : 'day'
+          } • Frequency: ${frequency} pill/day`}
           subtitleNumberOfLines={5}
           left={(props) => <Avatar.Icon {...props} icon={icon} />}
         />
@@ -133,6 +137,7 @@ const styles = StyleSheet.create({
   bannerSubtitle: {
     fontSize: 14,
     color: '#6E7191',
+    marginTop: 25,
   },
   flatlistTitle: {
     fontSize: 17,

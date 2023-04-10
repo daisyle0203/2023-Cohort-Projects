@@ -48,6 +48,7 @@ const FabModal = ({ hideModal }) => {
   const [suggestionsList, setSuggestionsList] = useState(null);
   const [strengthOpen, setStrengthOpen] = useState(false);
   const [frequencyOpen, setFrequencyOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
   const dropdownController = useRef(null);
   const searchRef = useRef(null);
   // context global state
@@ -143,7 +144,7 @@ const FabModal = ({ hideModal }) => {
           isSubmitting,
         }) => (
           <>
-            <View style={{ zIndex: 3 }}>
+            <View style={Platform.select({ ios: { zIndex: 3 } })}>
               <AutocompleteDropdown
                 ref={searchRef}
                 controller={(controller) => {
@@ -152,9 +153,9 @@ const FabModal = ({ hideModal }) => {
                 direction={Platform.select({ ios: 'down' })}
                 dataSet={suggestionsList}
                 onChangeText={getSuggestions}
-                onSelectItem={(item) => {
-                  if (item) {
-                    setFieldValue('name', item.title);
+                onSelectItem={(value) => {
+                  if (value) {
+                    setFieldValue('name', value.title);
                     handleChange('name');
                   }
                 }}
@@ -283,7 +284,7 @@ const FabModal = ({ hideModal }) => {
                     handleChange('amount');
                   }}
                 />
-                <Text style={{ marginRight: 10 }}>Pills</Text>
+                <Text style={{ marginRight: 10 }}>{values.amount > 1 ? 'Pills' : 'Pill'}</Text>
               </View>
             </View>
             {errors.amount && touched.amount && <Text style={styles.error}>{errors.amount}</Text>}
@@ -309,7 +310,7 @@ const FabModal = ({ hideModal }) => {
                     handleChange('duration');
                   }}
                 />
-                <Text style={{ marginRight: 10 }}>Days</Text>
+                <Text style={{ marginRight: 10 }}>{values.duration > 1 ? 'Days' : 'Day'}</Text>
               </View>
             </View>
             {errors.duration && touched.duration && (
