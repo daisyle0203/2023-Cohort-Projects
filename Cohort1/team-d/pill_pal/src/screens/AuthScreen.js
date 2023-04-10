@@ -1,3 +1,4 @@
+import LottieView from 'lottie-react-native';
 import React, { useState, useCallback } from 'react';
 import {
   View,
@@ -8,8 +9,9 @@ import {
   Platform,
 } from 'react-native';
 import { Button, TextInput, Text } from 'react-native-paper';
-import 'react-native-url-polyfill/auto';
 
+import 'react-native-url-polyfill/auto';
+import PillPalLoading from '../../assets/loading.json';
 import { useUserAuth } from '../hooks';
 
 const AuthScreen = () => {
@@ -51,7 +53,7 @@ const AuthScreen = () => {
   const toggleAuthScreen = useCallback(() => {
     if (currentScreen === 'login') {
       setCurrentScreen('signup');
-      return; 
+      return;
     }
     setCurrentScreen('login');
   }, [currentScreen]);
@@ -88,23 +90,17 @@ const AuthScreen = () => {
         style={styles.input}
       />
 
-      {loading ? (
-        <View style={styles.buttonContainer}>
-          <Button style={styles.button} loading={loading}>
-            Loading
-          </Button>
-        </View>
-      ) : null}
+      {loading ? <LottieView source={PillPalLoading} autoPlay loop /> : null}
 
       {currentScreen === 'login' ? (
         <View style={styles.buttonContainer}>
-          <Button mode="contained" style={styles.button} onPress={handleLogin}>
+          <Button mode="contained" onPress={handleLogin}>
             Log in
           </Button>
         </View>
       ) : (
         <View style={styles.buttonContainer}>
-          <Button mode="contained" style={styles.button} onPress={handleSignUp}>
+          <Button mode="contained" onPress={handleSignUp}>
             Create an account
           </Button>
         </View>
@@ -149,9 +145,6 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     marginTop: 20,
-  },
-  button: {
-    width: '100%',
   },
   image: {
     width: 450,

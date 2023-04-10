@@ -89,10 +89,20 @@ const HomeScreen = () => {
     }, 8000);
   };
 
+  const confettiColors = ['#FFFFFF', '#000000'];
+
   if (profile) {
     return (
       <>
-        {showConfetti && <ConfettiCannon count={200} autoStart origin={{ x: -10, y: 0 }} />}
+      <View style={styles.container}>
+        {showConfetti && (
+          <ConfettiCannon
+            count={200}
+            autoStart
+            origin={{ x: -10, y: 0 }}
+            confettiColors={['#ffdd00', '#ff4d4d', '#4d4dff', '#00cc99']}
+          />
+        )}
         <Portal>
           <Modal
             visible={selectedReminder !== null}
@@ -119,7 +129,7 @@ const HomeScreen = () => {
           </Modal>
         </Portal>
         <FlatList
-          style={styles.container}
+          
           ListHeaderComponent={
             <>
               <Searchbar
@@ -159,6 +169,7 @@ const HomeScreen = () => {
           )}
           keyExtractor={(item) => item.id}
         />
+      </View>
       </>
     );
   }
@@ -175,12 +186,12 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#fff',
+    backgroundColor: '#fff',
   },
   searchbar: {
     margin: 30,
     borderRadius: 15,
-    backgroundColor: '#efeaef',
+    backgroundColor: '#fbf2ff',
   },
   banner: {
     flexDirection: 'row',

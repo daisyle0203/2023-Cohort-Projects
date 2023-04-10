@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   searchbar: {
     margin: 30,
     borderRadius: 15,
-    backgroundColor: '#efeaef',
+    backgroundColor: '#fbf2ff',
   },
   titleHello: {
     fontSize: 30,

@@ -1,7 +1,9 @@
+import LottieView from 'lottie-react-native';
 import { useState, useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, TextInput, Avatar, Text } from 'react-native-paper';
 
+import PillPalLoading from '../../assets/loading.json';
 import { useUserAuth } from '../../src/hooks/useUserAuth';
 
 export default function ProfileScreen() {
@@ -44,14 +46,7 @@ export default function ProfileScreen() {
           onChangeText={handleSetUserName}
         />
       </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.inputLabel}>Website</Text>
-        <TextInput
-          style={styles.input}
-          value={website || profile?.website || ''}
-          onChangeText={handleSetWebsite}
-        />
-      </View>
+      {loading ? <LottieView source={PillPalLoading} autoPlay loop /> : null}
       <View style={styles.buttonContainer}>
         <Button
           mode="contained"
@@ -59,7 +54,7 @@ export default function ProfileScreen() {
           disabled={loading}
           style={styles.button}
           labelStyle={{ fontSize: 18 }}>
-          {loading ? 'Loading...' : 'Update'}
+          Update
         </Button>
       </View>
       <View style={styles.buttonContainer}>
