@@ -56,8 +56,7 @@ const HomeScreen = () => {
     const filteredData = medicationReminders.filter((item) => {
       return item.name.toLowerCase().includes(query.toLowerCase());
     });
-    console.log(filteredData);
-
+    
     setFilteredData(filteredData);
   };
 
