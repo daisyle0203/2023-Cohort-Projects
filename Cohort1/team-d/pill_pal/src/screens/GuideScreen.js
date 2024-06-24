@@ -168,6 +168,7 @@ const styles = StyleSheet.create({
   },
   messageText: {
     fontSize: 16,
+    padding: 7,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     height: 40,
-    backgroundColor: '#efeaef',
+    backgroundColor: '#fbf2ff',
     borderRadius: 20,
     paddingHorizontal: 10,
     marginRight: 10,

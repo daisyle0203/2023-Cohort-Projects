@@ -47,7 +47,7 @@ const MainApp = () => {
   if (session && session.user) {
     return (
       <SafeAreaView style={styles.container}>
-        <StatusBar backgroundColor="black" translucent />
+        <StatusBar backgroundColor="purple" translucent />
         <Portal>
           <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
             <FabModal hideModal={hideModal} />

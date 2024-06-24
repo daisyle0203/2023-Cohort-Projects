@@ -96,7 +96,6 @@ function UserMedication({ children }) {
           status: 0,
           due_date: new Date(date).toISOString().slice(0, 10),
         });
-        console.log('reminder error', error);
       }
 
       setLoading(false);

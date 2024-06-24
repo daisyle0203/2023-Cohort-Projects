@@ -65,7 +65,7 @@ function UserAuth({ children }) {
         email,
         password,
       });
-      Alert.alert('Check your email for the login link!');
+      Alert.alert('Check your email to confirm your email!');
     } catch (error) {
       Alert.alert(error.error_description || error.message);
     } finally {
@@ -80,7 +80,7 @@ function UserAuth({ children }) {
 
       const { data, error, status } = await supabase
         .from('profiles')
-        .select(`username, website, avatar_url`)
+        .select(`username`)
         .eq('id', session?.user.id)
         .single();
       if (error && status !== 406) {
@@ -99,7 +99,7 @@ function UserAuth({ children }) {
     }
   };
 
-  const updateProfile = async ({ username, website, avatar_url }) => {
+  const updateProfile = async ({ username }) => {
     try {
       setLoading(true);
       if (!session?.user) throw new Error('No user on the session!');
@@ -107,8 +107,6 @@ function UserAuth({ children }) {
       const updates = {
         id: session?.user.id,
         username,
-        website,
-        avatar_url,
         updated_at: new Date(),
       };
 
